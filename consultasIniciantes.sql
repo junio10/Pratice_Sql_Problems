@@ -50,3 +50,32 @@ select * from Orders O WHERE ShipCountry IN ('Brazil', 'Venezuela', 'Argentina',
 																						  --or  ShipCountry = 'Argentina'or ShipCountry = 'Mexico'
 --10 Employees, in order of age
 SELECT E.FirstName, E.LastName, E.Title, E.BirthDate FROM Employees E Order by E.BirthDate ASC
+
+--11 Showing only the Date with a DateTime field
+SELECT E.FirstName, E.LastName, E.Title, CONVERT(NVARCHAR, E.BirthDate, 23) as BirthDate FROM Employees E 
+Order by E.BirthDate ASC --Para se converter, pode se utilizar o convert ou cast link da documentação:
+                         --https://learn.microsoft.com/pt-br/sql/t-sql/functions/cast-and-convert-transact-sql?view=sql-server-ver16
+                                                      
+--12 Employees full name
+SELECT E.FirstName, E.LastName, CONCAT(E.FirstName + ' ',E.LastName) FROM Employees E --PARA CONCATENAR, SE USAR CONCAT e PODE SER FEITA APLICACOES DE REGEX
+--OU PODE SER FEITO ASSIM TAMBEM, ACHO MAIS SIMPLES
+SELECT E.FirstName, E.LastName ,E.FirstName + ' ' + E.LastName AS FullName FROM Employees E
+
+--13 OrderDetails amount per line item
+SELECT O.OrderID, O.ProductID, O.UnitPrice, O.Quantity, O.UnitPrice * O.Quantity AS TotalPrice FROM OrderDetails O 
+ORDER BY O.OrderID, O.ProductID
+
+--FUNCTION AGREGATION
+--COUNT -> CONTA AS LINHAS DE UMA CONSULTA
+--MIN -> PEGAR O VALOR MINIMO DE ALGUM ATRIBUTO DA TABELA
+--MAX -> PEGAR O VALOR MAXIMO DE ALGUM ATRIBUTO DA TABELA
+--SUM -> RETORNA A SOMA DE TODOS OS VALORES
+
+--14 How many customers?
+SELECT COUNT(C.CustomerID) AS TotalCustomers FROM Customers C --PARA CONTAR SE USAR O COUNT
+
+--15 When was the first order ?
+SELECT Min(O.OrderDate) AS FirstOrder FROM Orders O 
+
+
+
