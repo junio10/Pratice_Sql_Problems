@@ -77,5 +77,29 @@ SELECT COUNT(C.CustomerID) AS TotalCustomers FROM Customers C --PARA CONTAR SE U
 --15 When was the first order ?
 SELECT Min(O.OrderDate) AS FirstOrder FROM Orders O 
 
+--16 Countries where there are customers
+SELECT DISTINCT C.Country from Customers C  --TIRAR LINHA REPETIDAS DISTINCT
+--OU
+SELECT C.Country FROM Customers C GROUP BY C.Country --RETORNA UMA LINHA POR GRUPO, GROUP BY
+
+--17 Contact titles for customers
+SELECT C.ContactTitle, COUNT(C.ContactTitle) AS CountTitle  FROM CUSTOMERS C GROUP BY C.ContactTitle
+
+--18 Products with associated supplier names(JOINS)
+SELECT P.ProductID, P.ProductName, S.CompanyName FROM Products P JOIN Suppliers S
+ON(S.SupplierID = P.SupplierID)
+
+--19 Orders and the Shipper that was used(JOINS)
+SELECT O.OrderID, O.OrderDate, S.CompanyName FROM ORDERS O JOIN Shippers S 
+ON(S.ShipperID = O.ShipVia)
+WHERE O.OrderID < 10300
+ORDER BY O.OrderID ASC
+
+
+
+
+
+
+
 
 
