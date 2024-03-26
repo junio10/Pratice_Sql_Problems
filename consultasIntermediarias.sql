@@ -1,10 +1,12 @@
 use Northwind
 
 --20 Categories, and the total products in each category
-SELECT C.CategoryName,Count(P.CategoryID) AS CountPerCategorie from Products P JOIN Categories C 
-ON(P.CategoryID = C.CategoryID)
-GROUP BY P.CategoryID, C.CategoryName
-ORDER BY Count(P.CategoryID) DESC
+SELECT c.CategoryName, COUNT(p.CategoryID) as Total FROM Products p 
+join Categories c
+on(c.CategoryID = p.CategoryID)
+GROUP BY c.CategoryName, p.CategoryID
+--HAVING COUNT(P.CategoryID) > 10 FILTRO DO GROUP BY
+ORDER BY COUNT(P.CategoryID) DESC --ORDERNAR, SEMPRE VAI SER O ULTIMO
 
 --21 In the Customers table, show the total number of
 --customers per Country and City 
@@ -39,6 +41,24 @@ SELECT O.ShipCountry, AVG(O.Freight) AS AVGFREIGHT FROM Orders O
 GROUP BY O.ShipCountry
 ORDER BY AVG(O.Freight) DESC
 OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY
+
+--26 High Frteight charges in 2015
+SELECT O.ShipCountry, AVG(O.Freight) AS AVGFREIGHT FROM Orders O
+WHERE YEAR(O.OrderDate) = 2015
+GROUP BY O.ShipCountry
+ORDER BY AVG(O.Freight) DESC
+OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY
+
+
+
+
+
+--
+SELECT TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_TYPE = 'BASE TABLE';
+
+
 
 
 
