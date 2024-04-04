@@ -43,14 +43,26 @@ ORDER BY AVG(O.Freight) DESC
 OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY
 
 --26 High Frteight charges in 2015
-SELECT O.ShipCountry, AVG(O.Freight) AS AVGFREIGHT FROM Orders O
+SELECT TOP 3 O.ShipCountry, AVG(O.Freight) AS AVGFREIGHT FROM Orders O
 WHERE YEAR(O.OrderDate) = 2015
 GROUP BY O.ShipCountry
 ORDER BY AVG(O.Freight) DESC
-OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY
+--OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY
 
-
+--27 High freight charges with between
+Select Top 3
+ShipCountry
+,AverageFreight = avg(freight)
+From Orders
+Where
+OrderDate between '12/31/2014' and '1/1/2016'
+Group By ShipCountry
+Order By AVG(freight) desc;
 
+--28 High freight charges - last year
+SELECT TOP 3 O.ShipCountry, AVG(O.Freight) FROM Orders O
+WHERE DATEDIFF(MM, O.OrderDate, (SELECT MAX(ORDERDATE)FROM ORDERS)) <= 12GROUP BY O.ShipCountryORDER BY AVG(O.Freight) desc;	
+SELECT * FROM ORDERS;
 
 
 --
