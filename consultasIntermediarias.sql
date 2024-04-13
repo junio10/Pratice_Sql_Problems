@@ -62,7 +62,27 @@ Order By AVG(freight) desc;
 --28 High freight charges - last year
 SELECT TOP 3 O.ShipCountry, AVG(O.Freight) FROM Orders O
 WHERE DATEDIFF(MM, O.OrderDate, (SELECT MAX(ORDERDATE)FROM ORDERS)) <= 12GROUP BY O.ShipCountryORDER BY AVG(O.Freight) desc;	
-SELECT * FROM ORDERS;
+--29 Iventory List
+SELECT E.EmployeeID, E.LastName, O.OrderID, P.ProductName, OD.Quantity FROM Employees E
+JOIN Orders O ON(O.EmployeeID = E.EmployeeID)
+JOIN OrderDetails OD ON(O.OrderID = OD.OrderID)
+JOIN Products P ON(OD.ProductID = P.ProductID)
+ORDER BY O.OrderID, P.ProductID
+
+--30 Customers with no orders
+SELECT C.CustomerID , O.OrderID FROM Customers C
+LEFT JOIN ORDERS O ON(C.CustomerID = O.CustomerID)
+WHERE O.OrderID IS NULL
+
+--31 Customers with no orders for EmployeeID 4
+SELECT Customers.CustomerID,Orders.CustomerID
+FROM Customers LEFT JOIN Orders
+ON
+    Orders.CustomerID = Customers.CustomerID
+    AND Orders.EmployeeID = 4
+WHERE
+    Orders.CustomerID IS NULL
+
 
 
 --
